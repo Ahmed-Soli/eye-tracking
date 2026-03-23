@@ -17,7 +17,7 @@ This project demonstrates fundamental eye tracking and face detection techniques
 
 - Python 3.12+
 - A working webcam (for live detection modes)
-- An eye image file named `x.jpg` in the project root (for static pupil detection)
+- An eye image file named `eye_sample.jpg` in the project root (for static pupil detection)
 
 ## Installation
 
@@ -105,7 +105,7 @@ Enter `1`, `2`, or `3` to launch the corresponding mode. Press **`q`** to quit t
 | # | Mode | Description |
 |---|---|---|
 | 1 | Video Feed | Opens the webcam and displays a raw feed with a green ROI rectangle |
-| 2 | Pupil/Iris Detection | Loads `x.jpg`, applies thresholding and contour detection to locate the pupil, and displays the result |
+| 2 | Pupil/Iris Detection | Loads `eye_sample.jpg`, applies thresholding and contour detection to locate the pupil, and displays the result |
 | 3 | Face & Eye Detection | Detects faces (blue boxes) and eyes (green boxes) in real time using Haar cascades |
 
 ## How It Works
@@ -134,7 +134,7 @@ Bounding Box Overlay → Display
 ### Pupil Detection Pipeline
 
 ```
-Static Eye Image (x.jpg)
+Static Eye Image (eye_sample.jpg)
     │
     ▼
 Grayscale Conversion
@@ -162,7 +162,7 @@ Contour Visualization → Save & Display
 ```
 presentation/
 ├── eye_tracking.py    # Main script with all detection functions
-├── x.jpg              # Sample eye image for pupil detection
+├── eye_sample.jpg              # Sample eye image for pupil detection
 ├── contour_image.jpg  # Generated output from detect_eyes()
 ├── venv/              # Python virtual environment
 └── README.md

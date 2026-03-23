@@ -20,7 +20,7 @@ def video_feed():
     cv2.destroyAllWindows()
 
 def detect_eyes():
-    eye_img = cv2.imread('x.jpg')
+    eye_img = cv2.imread('eye_sample.jpg')
     eye_gray = cv2.cvtColor(eye_img, cv2.COLOR_BGR2GRAY)
 
     _, thresh = cv2.threshold(eye_gray, 30,255,cv2.THRESH_BINARY_INV)
