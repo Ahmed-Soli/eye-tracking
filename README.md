@@ -21,47 +21,92 @@ This project demonstrates fundamental eye tracking and face detection techniques
 
 ## Installation
 
+### 1. Clone the repository
+
 ```bash
-# Clone the repository
 git clone <repository-url>
 cd presentation
+```
 
-# Create and activate a virtual environment
+### 2. Create a virtual environment
+
+**macOS / Linux:**
+
+```bash
 python3 -m venv venv
-source venv/bin/activate   # macOS/Linux
-# venv\Scripts\activate    # Windows
+```
 
-# Install dependencies
+**Windows:**
+
+```cmd
+python -m venv venv
+```
+
+### 3. Activate the virtual environment
+
+**macOS / Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+**Windows (Command Prompt):**
+
+```cmd
+venv\Scripts\activate
+```
+
+**Windows (PowerShell):**
+
+```powershell
+venv\Scripts\Activate.ps1
+```
+
+> After activation you should see `(venv)` at the beginning of your terminal prompt.
+
+### 4. Install dependencies
+
+```bash
 pip install opencv-python numpy matplotlib
+```
+
+### Deactivating the virtual environment
+
+When you're done, run:
+
+```bash
+deactivate
 ```
 
 ## Usage
 
-Run the script to start real-time face and eye detection:
+Run the script:
 
 ```bash
 python eye_tracking.py
 ```
 
-Press **`q`** to quit the webcam window.
+You will see an interactive menu:
 
-### Switching Modes
-
-The script contains three functions that can be called from the bottom of `eye_tracking.py`:
-
-| Function | Description |
-|---|---|
-| `video_feed()` | Opens the webcam and displays a raw feed with a green ROI rectangle |
-| `detect_eyes()` | Loads `x.jpg`, applies thresholding and contour detection to locate the pupil, and displays the result |
-| `face_detection()` | Detects faces (blue boxes) and eyes (green boxes) in real time using Haar cascades |
-
-By default, `face_detection()` is called. To try a different mode, edit the last line of the script:
-
-```python
-# Replace face_detection() with one of:
-video_feed()
-detect_eyes()
 ```
+Eye Tracking - HCI Project
+------------------------------
+1. Video Feed
+2. Pupil/Iris Detection
+3. Face & Eye Detection
+------------------------------
+Select mode (1-3):
+```
+
+Enter `1`, `2`, or `3` to launch the corresponding mode. Press **`q`** to quit the webcam window.
+
+### Modes
+
+| # | Mode | Description |
+|---|---|---|
+| 1 | Video Feed | Opens the webcam and displays a raw feed with a green ROI rectangle |
+| 2 | Pupil/Iris Detection | Loads `x.jpg`, applies thresholding and contour detection to locate the pupil, and displays the result |
+| 3 | Face & Eye Detection | Detects faces (blue boxes) and eyes (green boxes) in real time using Haar cascades |
 
 ## How It Works
 
