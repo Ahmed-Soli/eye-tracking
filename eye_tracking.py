@@ -21,7 +21,7 @@ def video_feed():
 
 def detect_eyes():
     eye_img = cv2.imread('x.jpg')
-    eye_gray = cv2.cvtcolor(eye_img,cv2.COLOR_BGR2GRAY)
+    eye_gray = cv2.cvtColor(eye_img, cv2.COLOR_BGR2GRAY)
 
     _, thresh = cv2.threshold(eye_gray, 30,255,cv2.THRESH_BINARY_INV)
 
@@ -57,4 +57,22 @@ def face_detection():
     cap.release()
     cv2.destroyAllWindows()
 
-face_detection()
+
+if __name__ == "__main__":
+    print("Eye Tracking - HCI Project")
+    print("-" * 30)
+    print("1. Video Feed")
+    print("2. Pupil/Iris Detection")
+    print("3. Face & Eye Detection")
+    print("-" * 30)
+
+    choice = input("Select mode (1-3): ").strip()
+
+    if choice == "1":
+        video_feed()
+    elif choice == "2":
+        detect_eyes()
+    elif choice == "3":
+        face_detection()
+    else:
+        print("Invalid choice. Please run again and select 1, 2, or 3.")
