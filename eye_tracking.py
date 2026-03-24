@@ -1,6 +1,10 @@
+import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+
+IMAGES_DIR = "images"
+OUTPUT_DIR = "output"
 
 def video_feed():
     cap = cv2.VideoCapture(0)
@@ -20,16 +24,53 @@ def video_feed():
     cv2.destroyAllWindows()
 
 def detect_eyes():
-    eye_img = cv2.imread('eye_sample.jpg')
-    eye_gray = cv2.cvtColor(eye_img, cv2.COLOR_BGR2GRAY)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    _, thresh = cv2.threshold(eye_gray, 30,255,cv2.THRESH_BINARY_INV)
+    supported_ext = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
+    files = sorted(
+        f for f in os.listdir(IMAGES_DIR)
+        if f.lower().endswith(supported_ext)
+    )
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    contour_image = np.zeros_like(eye_img,dtype=np.uint8)
-    cv2.drawContours(contour_image, contours, -1, (0, 255, 0), 2)
-    cv2.imwrite('contour_image.jpg', contour_image)
-    plt.imshow(contour_image,cmap='gray')
+    if not files:
+        print(f"No images found in '{IMAGES_DIR}/'")
+        return
+
+    print(f"Found {len(files)} image(s) in '{IMAGES_DIR}/'")
+
+    for filename in files:
+        input_path = os.path.join(IMAGES_DIR, filename)
+        eye_img = cv2.imread(input_path)
+
+        if eye_img is None:
+            print(f"  [SKIP] Could not read: {filename}")
+            continue
+
+        eye_gray = cv2.cvtColor(eye_img, cv2.COLOR_BGR2GRAY)
+        _, thresh = cv2.threshold(eye_gray, 30, 255, cv2.THRESH_BINARY_INV)
+
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contour_image = np.zeros_like(eye_img, dtype=np.uint8)
+        cv2.drawContours(contour_image, contours, -1, (0, 255, 0), 2)
+
+        name, _ = os.path.splitext(filename)
+        output_path = os.path.join(OUTPUT_DIR, f"{name}_contour.jpg")
+        cv2.imwrite(output_path, contour_image)
+        print(f"  [OK] {filename} -> {output_path}")
+
+    print(f"\nAll results saved to '{OUTPUT_DIR}/'")
+    print("Displaying results...")
+
+    for filename in files:
+        name, _ = os.path.splitext(filename)
+        output_path = os.path.join(OUTPUT_DIR, f"{name}_contour.jpg")
+        result = cv2.imread(output_path)
+        if result is not None:
+            plt.figure(figsize=(8, 6))
+            plt.imshow(cv2.cvtColor(result, cv2.COLOR_BGR2RGB))
+            plt.title(f"{filename}")
+            plt.axis("off")
+
     plt.show()
 
 
